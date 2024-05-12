@@ -15,5 +15,7 @@ Create Table Cars
 
 Create Table Service
 (
-    id integer primary key autoincrement
+    id integer primary key autoincrement,
+    work text,
+    car_id integer references Cars(id)
 );
