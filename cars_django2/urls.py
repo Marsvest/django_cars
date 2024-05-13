@@ -19,10 +19,16 @@ from django.urls import path
 from app.views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
 
-    path('cars/<int:user_id>', read_cars_view),
-    path('cars/create', create_car_view),
-    path('cars/update/<int:car_id>', update_car_view),
-    path('cars/delete/<int:car_id>', delete_car_view),
+    path('user/<int:user_id>/cars', read_cars_view),
+
+    path('car/create', create_car_view),
+    path('car/<int:car_id>/update', update_car_view),
+    path('car/<int:car_id>/delete', delete_car_view),
+
+    path('car/<int:car_id>/service', read_service_view),
+    path('car/service/create', create_service_view),
+
+    path('service/<int:service_id>/delete', delete_service_view),
 ]

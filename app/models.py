@@ -12,6 +12,8 @@ class Cars(models.Model):
 
 
 class Service(models.Model):
+    start_timestamp = models.IntegerField(blank=True, null=True)
+    end_timestamp = models.IntegerField(blank=True, null=True)
     oil_work = models.BooleanField(blank=True, null=True)
     fluids_work = models.BooleanField(blank=True, null=True)
     filters_work = models.BooleanField(blank=True, null=True)

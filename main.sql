@@ -16,6 +16,8 @@ Create Table Cars
 Create Table Service
 (
     id                       integer primary key autoincrement,
+    start_timestamp          integer,
+    end_timestamp            integer,
     oil_work                 boolean,
     fluids_work              boolean,
     filters_work             boolean,
