@@ -20,5 +20,9 @@ from app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cars/<int:user_id>', get_cars_view, name='get_cars'),
+
+    path('cars/<int:user_id>', read_cars_view),
+    path('cars/create', create_car_view),
+    path('cars/update/<int:car_id>', update_car_view),
+    path('cars/delete/<int:car_id>', delete_car_view),
 ]
