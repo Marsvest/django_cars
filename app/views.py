@@ -1,4 +1,5 @@
-from django.http import JsonResponse
+from django.contrib.auth import authenticate
+from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 import json
@@ -22,7 +23,6 @@ def read_cars_view(request, user_id):
     }, status=200)
 
 
-@csrf_exempt
 @require_http_methods(["POST"])
 @tryexception
 def create_car_view(request):
@@ -39,7 +39,6 @@ def create_car_view(request):
     }, status=201)
 
 
-@csrf_exempt
 @require_http_methods(["PUT"])
 @tryexception
 def update_car_view(request, car_id):
@@ -54,7 +53,6 @@ def update_car_view(request, car_id):
     }, status=200)
 
 
-@csrf_exempt
 @require_http_methods(["DELETE"])
 @tryexception
 def delete_car_view(request, car_id):
@@ -80,7 +78,6 @@ def read_service_view(request, car_id):
     return JsonResponse({'service': service_data}, status=200)
 
 
-@csrf_exempt
 @require_http_methods(["POST"])
 @tryexception
 def create_service_view(request):
@@ -97,7 +94,6 @@ def create_service_view(request):
     }, status=201)
 
 
-@csrf_exempt
 @require_http_methods(["PUT"])
 @tryexception
 def update_service_view(request, service_id):
@@ -120,7 +116,6 @@ def update_service_view(request, service_id):
     return JsonResponse({'message': 'Service updated successfully'}, status=200)
 
 
-@csrf_exempt
 @require_http_methods(["DELETE"])
 @tryexception
 def delete_service_view(request, service_id):
@@ -146,3 +141,19 @@ def register_view(request):
         return JsonResponse({
             'error': 'User already exists'
         }, status=400)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+@tryexception
+def login_view(request):
+    data = json.loads(request.body)
+    username = data.get('username')
+    password = data.get('password')
+    user = authenticate(username=username, password=password)
+
+    if user is not None:
+        csrf_token = get_token(request)
+        return JsonResponse({'success': True, 'csrf_token': csrf_token})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid credentials'})

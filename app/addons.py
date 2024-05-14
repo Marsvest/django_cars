@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-from hashlib import sha256
 
 
 def tryexception(view_func):
