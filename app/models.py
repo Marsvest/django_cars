@@ -4,7 +4,7 @@ from django.db import models
 class Cars(models.Model):
     name = models.TextField(blank=True, null=True)
     number = models.TextField(blank=True, null=True, unique=True)
-    owner = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
+    owner = models.ForeignKey('Clients', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -29,10 +29,10 @@ class Service(models.Model):
         db_table = 'Service'
 
 
-class Users(models.Model):
-    login = models.TextField(blank=True, null=True)
-    password = models.TextField(blank=True, null=True)
+class Clients(models.Model):
+    name = models.TextField(blank=True, null=True)
+    last_name = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'Users'
+        db_table = 'Clients'

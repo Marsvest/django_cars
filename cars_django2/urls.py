@@ -21,7 +21,7 @@ from app.views import *
 urlpatterns = [
     path('admin', admin.site.urls),
 
-    path('user/<int:user_id>/cars', read_cars_view),
+    path('client/<int:user_id>/cars', read_cars_view),
 
     path('car/create', create_car_view),
     path('car/<int:car_id>/update', update_car_view),
@@ -32,4 +32,5 @@ urlpatterns = [
 
     path('service/<int:service_id>/update', update_service_view),
     path('service/<int:service_id>/delete', delete_service_view),
+    path('user/register', register_view),
 ]

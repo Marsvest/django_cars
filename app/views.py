@@ -2,8 +2,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 import json
+from django.contrib.auth.models import User as User_Auth
 
-from .crud import *
+from .addons import *
 from .models import *
 
 
@@ -26,7 +27,7 @@ def read_cars_view(request, user_id):
 @tryexception
 def create_car_view(request):
     data = json.loads(request.body)
-    owner = Users.objects.get(id=data['owner_id'])
+    owner = Clients.objects.get(id=data['owner_id'])
     new_car = Cars.objects.create(
         name=data['car_name'],
         number=data['car_number'],
@@ -126,3 +127,22 @@ def delete_service_view(request, service_id):
     service = Service.objects.get(id=service_id)
     service.delete()
     return JsonResponse({'message': 'Service deleted successfully'}, status=200)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+@tryexception
+def register_view(request):
+    data = json.loads(request.body)
+    username = data.get('username')
+
+    if not User_Auth.objects.filter(username=username).exists():
+        new_user = User_Auth.objects.create_user(username=data.get('username'), password=data.get('password'))
+
+        return JsonResponse({
+            'user_id': new_user.id
+        }, status=201)
+    else:
+        return JsonResponse({
+            'error': 'User already exists'
+        }, status=400)

@@ -1,8 +1,8 @@
-Create Table Users
+Create Table Clients
 (
-    id       integer primary key autoincrement,
-    login    text,
-    password text
+    id        integer primary key autoincrement,
+    name      text,
+    last_name text
 );
 
 Create Table Cars
@@ -10,7 +10,7 @@ Create Table Cars
     id       integer primary key autoincrement,
     name     text,
     number   text,
-    owner_id integer references Users (id)
+    owner_id integer references Clients (id)
 );
 
 Create Table Service
