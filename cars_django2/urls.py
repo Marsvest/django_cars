@@ -30,5 +30,6 @@ urlpatterns = [
     path('car/<int:car_id>/service', read_service_view),
     path('car/service/create', create_service_view),
 
+    path('service/<int:service_id>/update', update_service_view),
     path('service/<int:service_id>/delete', delete_service_view),
 ]

@@ -97,6 +97,29 @@ def create_service_view(request):
 
 
 @csrf_exempt
+@require_http_methods(["PUT"])
+@tryexception
+def update_service_view(request, service_id):
+    try:
+        service = Service.objects.get(id=service_id)
+    except Service.DoesNotExist:
+        return JsonResponse({'error': 'Service not found'}, status=404)
+
+    data = json.loads(request.body)
+
+    for field in Service._meta.fields:
+        if field.name != 'id' and field.name != 'car_id':
+            setattr(service, field.name, data.get(field.name, getattr(service, field.name)))
+
+    if 'car_id' in data:
+        service.car_id = data['car_id']
+
+    service.save()
+
+    return JsonResponse({'message': 'Service updated successfully'}, status=200)
+
+
+@csrf_exempt
 @require_http_methods(["DELETE"])
 @tryexception
 def delete_service_view(request, service_id):
